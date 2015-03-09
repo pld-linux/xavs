@@ -3,7 +3,7 @@ Summary(pl.UTF-8):	Biblioteka kodeka AVS (Audio Video Standard of China)
 Name:		xavs
 Version:	0
 %define	svnver	51
-Release:	0.svn%{svnver}.1
+Release:	0.svn%{svnver}.2
 License:	GPL v2+
 Group:		Libraries
 # svn co https://xavs.svn.sourceforge.net/svnroot/xavs/trunk xavs
