@@ -9,6 +9,24 @@
              ;;
          --disable-asm)
              asm="no"
+@@ -237,7 +237,7 @@
+     ARCH="X86_64"
+     AS="yasm"
+     if [ "$SYS" = MACOSX ];then
+-      ASFLAGS="$ASFLAGS -f macho64 -m amd64 -DPIC -DPREFIX"
++      ASFLAGS="$ASFLAGS -f macho64 -m amd64 -D__PIC__ -DPREFIX"
+       CFLAGS="$CFLAGS -arch x86_64"
+       LDFLAGS="$LDFLAGS -arch x86_64"
+     elif [ "$SYS" = MINGW ]; then
+@@ -398,7 +398,7 @@
+ 
+ if [ "$pic" = "yes" ] ; then
+     CFLAGS="$CFLAGS -fPIC"
+-    ASFLAGS="$ASFLAGS -DPIC"
++    ASFLAGS="$ASFLAGS -D__PIC__"
+     # resolve textrels in the x86 asm
+     cc_check stdio.h -Wl,-Bsymbolic && LDFLAGS="$LDFLAGS -Wl,-Bsymbolic"
+ fi
 --- xavs/common/cpu.c.orig	2017-07-20 17:37:44.000000000 +0200
 +++ xavs/common/cpu.c	2017-07-20 20:11:52.406131711 +0200
 @@ -199,6 +199,16 @@

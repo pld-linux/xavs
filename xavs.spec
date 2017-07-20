@@ -72,7 +72,7 @@ Statyczna biblioteka AVS.
 ./configure \
 	--prefix=%{_prefix} \
 	--libdir=%{_libdir} \
-	--enable-asm%{!?with_asm:=no} \
+	%{?with_asm:--enable-asm}%{!?with_asm:--disable-asm} \
 	--enable-shared \
 	--extra-cflags="%{rpmcflags} %{rpmcppflags} -fno-strict-aliasing" \
 	--extra-ldflags="%{rpmldflags}"
