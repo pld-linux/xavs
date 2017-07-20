@@ -1,0 +1,71 @@
+--- xavs/configure.orig	2017-07-20 17:37:44.000000000 +0200
++++ xavs/configure	2017-07-20 18:41:11.919527165 +0200
+@@ -87,7 +87,7 @@
+             ;;
+         --enable-asm)
+             asm="yes"
+-            CFLAGS="$CFLAGS -DHAVE_MMXEXT -DHAVE_SSE -DHAVE_SSE2"
++            CFLAGS="$CFLAGS -DHAVE_MMX -DHAVE_MMXEXT -DHAVE_SSE -DHAVE_SSE2"
+             ;;
+         --disable-asm)
+             asm="no"
+--- xavs/common/cpu.c.orig	2017-07-20 17:37:44.000000000 +0200
++++ xavs/common/cpu.c	2017-07-20 20:11:52.406131711 +0200
+@@ -199,6 +199,16 @@
+   return cpu;
+ }
+ 
++void
++xavs_cpu_restore (uint32_t cpu)
++{
++  return;
++}
++
++void
++xavs_cpu_mask_misalign_sse (void)
++{
++}
+ #elif defined( ARCH_PPC )
+ 
+ #if defined(SYS_MACOSX) || defined(SYS_OPENBSD)
+@@ -264,6 +274,12 @@
+ 
+   return XAVS_CPU_ALTIVEC;
+ }
++
++void
++xavs_cpu_restore (uint32_t cpu)
++{
++  return;
++}
+ #endif
+ 
+ #else
+--- xavs/common/dct.c.orig	2017-07-20 17:37:44.000000000 +0200
++++ xavs/common/dct.c	2017-07-20 18:58:37.049515231 +0200
+@@ -429,6 +429,7 @@
+       {
+         pf->scan_8x8 = zigzag_scan_8x8_frame;
+         pf->sub_8x8 = zigzag_sub_8x8_frame;
++#if 0 /* functions not defined */
+ #ifdef HAVE_MMX
+         if (cpu & XAVS_CPU_MMXEXT)
+           pf->scan_8x8 = xavs_zigzag_scan_8x8_frame_mmxext;
+@@ -441,6 +442,7 @@
+         }
+ #endif /*HAVE_SSE3*/        
+ #endif
++#endif
+       }
+ }
+ 
+--- xavs/Makefile.orig	2017-07-20 18:58:56.609515009 +0200
++++ xavs/Makefile	2017-07-20 19:16:58.359502654 +0200
+@@ -18,7 +18,6 @@
+ X86SRC = common/i386/cpu-a.asm \
+          common/i386/dct-sse2.asm \
+          common/i386/deblock.asm \
+-         common/i386/deblock_inter.asm \
+          common/i386/deblock_intra.asm \
+          common/i386/mc-a01.asm \
+          common/i386/mc-a.asm \

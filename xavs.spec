@@ -1,22 +1,31 @@
+#
+# Conditional build:
+%bcond_without	asm	# MMX/SSE* x86 assembler optimizations
+
+%ifnarch %{ix86} %{x8664}
+%undefine	with_asm
+%endif
 Summary:	Audio Video Standard of China library
 Summary(pl.UTF-8):	Biblioteka kodeka AVS (Audio Video Standard of China)
 Name:		xavs
 Version:	0
-%define	svnver	51
+%define	svnver	55
 Release:	0.svn%{svnver}.2
 License:	GPL v2+
 Group:		Libraries
 # svn co https://xavs.svn.sourceforge.net/svnroot/xavs/trunk xavs
 Source0:	%{name}-r%{svnver}.tar.xz
-# Source0-md5:	c96ff5e330dd18760bc2024435a95a01
+# Source0-md5:	c4f73561424d850a5c59ef202d85f0d7
 Patch0:		%{name}-dynamic-xavs.patch
+Patch1:		%{name}-asm.patch
+URL:		http://xavs.sourceforge.net/
 BuildRequires:	tar >= 1:1.22
 # for svnversion
 BuildRequires:	subversion
 BuildRequires:	xz
-%ifarch %{ix86} %{x8664}
-#BuildRequires:	binutils >= 2.17
-#BuildRequires:	yasm >= 0.6.1
+%if %{with asm}
+BuildRequires:	binutils >= 2:2.17
+BuildRequires:	yasm >= 0.6.1
 %endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -56,19 +65,17 @@ Statyczna biblioteka AVS.
 %prep
 %setup -q -n %{name}
 %patch0 -p1
+%patch1 -p1
 
 %build
 # not autoconf script
 ./configure \
 	--prefix=%{_prefix} \
 	--libdir=%{_libdir} \
+	--enable-asm%{!?with_asm:=no} \
 	--enable-shared \
 	--extra-cflags="%{rpmcflags} %{rpmcppflags} -fno-strict-aliasing" \
 	--extra-ldflags="%{rpmldflags}"
-# currently broken
-#%ifarch %{ix86} %{x8664} \
-#	--enable-asm \
-#%endif
 
 # linking hack
 ln -sf libxavs.so.1 libxavs.so
