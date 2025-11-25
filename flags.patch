@@ -1,0 +1,20 @@
+--- xavs/configure.orig	2025-11-25 23:39:57.331188206 +0100
++++ xavs/configure	2025-11-25 23:46:03.569957134 +0100
+@@ -403,17 +403,6 @@
+     cc_check stdio.h -Wl,-Bsymbolic && LDFLAGS="$LDFLAGS -Wl,-Bsymbolic"
+ fi
+ 
+-if [ "$debug" != "yes" -a "$gprof" != "yes" ]; then
+-    CFLAGS="$CFLAGS -s -fomit-frame-pointer"
+-    LDFLAGS="$LDFLAGS -s"
+-fi
+-
+-if [ "$debug" = "yes" ]; then
+-    CFLAGS="-O1 -g $CFLAGS"
+-else
+-    CFLAGS="-O4 -ffast-math $CFLAGS"
+-fi
+-
+ if cc_check "stdio.h" "" "fseeko(stdin,0,0);" ; then
+     echo "#define fseek fseeko" >> config.h
+     echo "#define ftell ftello" >> config.h

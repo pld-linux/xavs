@@ -19,6 +19,7 @@ Source0:	%{name}-r%{svnver}.tar.xz
 # Source0-md5:	c4f73561424d850a5c59ef202d85f0d7
 Patch0:		%{name}-dynamic-xavs.patch
 Patch1:		%{name}-asm.patch
+Patch2:		flags.patch
 URL:		http://xavs.sourceforge.net/
 BuildRequires:	tar >= 1:1.22
 # for svnversion
@@ -67,6 +68,7 @@ Statyczna biblioteka AVS.
 %setup -q -n %{name}
 %patch -P0 -p1
 %patch -P1 -p1
+%patch -P2 -p1
 
 %build
 # not autoconf script
