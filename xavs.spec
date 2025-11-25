@@ -7,7 +7,7 @@
 %undefine	with_asm
 %endif
 
-%define		rel	2
+%define		rel	3
 
 Summary:	Audio Video Standard of China library
 Summary(pl.UTF-8):	Biblioteka kodeka AVS (Audio Video Standard of China)
