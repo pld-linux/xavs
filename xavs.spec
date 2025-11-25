@@ -6,12 +6,15 @@
 # %{x8664} misses GOT code in i386inc.asm
 %undefine	with_asm
 %endif
+
+%define		rel	2
+
 Summary:	Audio Video Standard of China library
 Summary(pl.UTF-8):	Biblioteka kodeka AVS (Audio Video Standard of China)
 Name:		xavs
 Version:	0
 %define	svnver	55
-Release:	0.svn%{svnver}.2
+Release:	0.svn%{svnver}.%{rel}
 License:	GPL v2+
 Group:		Libraries
 # svn co https://xavs.svn.sourceforge.net/svnroot/xavs/trunk xavs
