@@ -26,7 +26,7 @@ BuildRequires:	tar >= 1:1.22
 BuildRequires:	subversion
 BuildRequires:	xz
 %if %{with asm}
-BuildRequires:	binutils >= 2:2.17
+BuildRequires:	binutils >= 3:2.17
 BuildRequires:	yasm >= 0.6.1
 %endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
