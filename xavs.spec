@@ -1,6 +1,6 @@
 #
 # Conditional build:
-%bcond_without	asm	# MMX/SSE* x86 assembler optimizations
+%bcond_with	asm	# MMX/SSE* x86 assembler optimizations
 
 %ifnarch %{ix86}
 # %{x8664} misses GOT code in i386inc.asm
